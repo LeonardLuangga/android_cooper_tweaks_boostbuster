@@ -1,0 +1,16 @@
+#!/system/bin/sh
+#
+# mount swap partition
+# ====================
+# Copyright (c) Leonard Luangga
+
+
+if [ -e /dev/block/mmcblk0p3 ]
+then
+  if [ "$(cat /proc/partitions | grep mmcblk0p3)" == "" ]
+  then
+    swapon /dev/block/mmcblk0p3
+  fi
+else
+  echo "SWAP Partition not found or not exists"
+fi

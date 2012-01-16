@@ -1,7 +1,7 @@
 #!/system/bin/sh
 #
-# mount swap partition
-# ====================
+# activate swap partition
+# =============================
 # Copyright (c) Leonard Luangga
 
 
@@ -12,5 +12,5 @@ then
     swapon /dev/block/mmcblk0p3
   fi
 else
-  echo "SWAP Partition not found or not exists"
+  echo "SWAP Activation canceled. SWAP Partition not found or does not exists."
 fi

@@ -1,6 +1,6 @@
 #!/system/bin/sh
 #
-# Copyright (c) 2011 Leonard Luangga
+# Copyright (c) Leonard Luangga
 
 
 #remove cache, tmp, and unused files

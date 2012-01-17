@@ -7,9 +7,11 @@
 
 if [ -e /dev/block/mmcblk0p3 ]
 then
-  if [ "$(cat /proc/partitions | grep mmcblk0p3)" == "" ]
+  if [ "$(cat /proc/partitions | grep mmcblk0p3)" != "" ]
   then
     swapon /dev/block/mmcblk0p3
+  else
+    echo "SWAP Activation canceled. SWAP Partition not found or does not exists."
   fi
 else
   echo "SWAP Activation canceled. SWAP Partition not found or does not exists."

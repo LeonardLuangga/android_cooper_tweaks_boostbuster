@@ -13,7 +13,7 @@ BML=`ls -d /sys/block/bml*`;
 #optimize scheduler
 for i in $LOOP $RAM $MMC $STL $BML
 do
-  if [ -e $i/queue/scheduler ]
+	if [ -e $i/queue/scheduler ]
 	then
 		echo cfq > $i/queue/scheduler
 	fi
@@ -25,17 +25,17 @@ do
 	
 	if [ -e $i/queue/iosched/quantum ]
 	then
-		echo 4 > $i/queue/iosched/quantum
+		echo 8 > $i/queue/iosched/quantum
 	fi
 	
 	if [ -e $i/queue/iosched/slice_async_rq ]
 	then
-		echo 2 > $i/queue/iosched/slice_async_rq
+		echo 4 > $i/queue/iosched/slice_async_rq
 	fi
 	
 	if [ -e $i/queue/iosched/slice_idle ]
 	then
-		echo 0 > $i/queue/iosched/slice_idle
+		echo 3 > $i/queue/iosched/slice_idle
 	fi
 	
 	if [ -e $i/queue/iosched/low_latency ]

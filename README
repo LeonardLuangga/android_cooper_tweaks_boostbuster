@@ -1,5 +1,8 @@
 This is a tweak source that I named as BoostBuster, my goal from this tweak is to make Samsung Galaxy Ace S5830 (Running Android OS) to be more faster and more battery life. I'm open for any suggestions :)
 
-Known Issues:
-- Does the touchscreen sensitivity tweak works? I don't think it is but I'm gonna try to fix it
-- Please inform me for any issues you found
+Changelog v1.1:
+- Change DNS to the nearest DNS server in Indonesia
+- Activate swap on boot
+- Cache handler (by slaid480)
+- Increase some speed
+- Improved I/O speed

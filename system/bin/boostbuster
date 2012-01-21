@@ -1,0 +1,299 @@
+#!/system/bin/sh
+#
+# BoostBuster v1.1
+# =============================
+# Copyright (c) Leonard Luangga
+
+
+if [ "$(id -u)" != "0" ]; then
+  echo
+  echo "***********************************"
+  echo "*         BoostBuster v1.1        *"
+  echo "*  Copyright (c) Leonard Luangga  *"
+  echo "***********************************"
+  echo
+  echo 'This script must be run as root!'
+  exit 1
+fi
+
+
+mount -o remount,rw /system
+clear
+
+
+echo
+echo "***********************************"
+echo "*         BoostBuster v1.1        *"
+echo "*  Copyright (c) Leonard Luangga  *"
+echo "***********************************"
+echo
+
+
+if [ -e /system/etc/init.d/82iospeed ]
+then
+  	echo " 1 - Disable I/O Speed Optimizer"
+else
+		echo " 1 - Enable I/O Speed Optimizer"
+fi
+
+if [ -e /system/etc/init.d/83sqlite ]
+then
+		echo " 2 - Disable SQLite database optimizer"
+else
+		echo " 2 - Enable SQLite database optimizer"
+fi
+
+if [ -e /system/etc/init.d/84zipalign ]
+then
+		echo " 3 - Disable ZipAlign /data on boot" 
+else
+		echo " 3 - Enable ZipAlign /data on boot" 
+fi
+
+if [ -e /system/etc/init.d/85firewall ]; then
+		echo " 4 - Disable Firewall"
+else
+		echo " 4 - Enable Firewall"
+fi
+
+if [ -e /system/etc/init.d/86cleaner ]; then
+		echo " 5 - Disable Cleaning junks on boot"
+else
+		echo " 5 - Enable Cleaning junks on boot"
+fi
+
+if [ -e /system/etc/init.d/87swapon ];
+then
+		echo " 6 - Disable Activating swap on boot"
+else
+		echo " 6 - Enable Activating swap on boot"
+fi
+
+if [ -e /system/etc/init.d/88bustertweaks ];
+then
+  	echo " 7 - Disable BusterTweaks"
+else
+		echo " 7 - Enable BusterTweaks"
+fi
+
+
+echo
+echo " More Options..."
+echo "*******************"
+echo " r - Reboot (apply)"
+echo " a - Enable all"
+echo " d - Disable all"
+echo " u - Uninstall"
+echo " e - Exit"
+echo
+echo "Please enter your choice: " 
+read tweaks
+
+
+case "$tweaks" in
+  "1")
+	if [ -e /system/etc/init.d/82iospeed ]; then
+			rm -f /system/etc/init.d/82iospeed
+			echo
+			echo "[DISABLED] I/O Speed Tweaks"
+	else
+			cp /system/etc/boostbuster/82iospeed /system/etc/init.d/82iospeed
+			chmod 755 /system/etc/init.d/82iospeed
+			echo
+			echo "[ENABLED] I/O Speed Tweaks"
+			clear
+			boostbuster
+	fi;
+	;;
+	"2")
+	if [ -e /system/etc/init.d/83sqlite ]; then
+			rm -f /system/etc/init.d/83sqlite
+			echo
+			echo "[DISABLED] SQLite Database Optimizer"
+	else
+			cp /system/etc/speedboost/83sqlite /system/etc/init.d/83sqlite
+			chmod 755 /system/etc/init.d/83sqlite
+			echo
+			echo "[ENABLED] SQLite Database Optimizer"
+			clear
+			boostbuster
+	fi;
+ 	;;
+	"3")
+	if [ -e /system/etc/init.d/84zipalign ]; then
+			rm -f /system/etc/init.d/84zipalign
+			echo
+			echo "[DISABLED] ZipAlign on boot"
+	else
+			cp /system/etc/speedboost/84zipalign /system/etc/init.d/84zipalign
+			chmod 755 /system/etc/init.d/84zipalign
+			echo
+			echo "[ENABLED] ZipAlign on boot"
+			clear
+			boostbuster
+	fi; 
+	;;
+	"4")
+  if [ -e /system/etc/init.d/85firewall ]; then
+			rm -f /system/etc/init.d/85firewall
+			echo
+			echo "[DISABLED] Firewall"
+	else
+			cp /system/etc/speedboost/85firewall /system/etc/init.d/85firewall
+			chmod 755 /system/etc/init.d/85firewall
+			echo
+			echo "[ENABLED] Firewall"
+			clear
+			boostbuster
+	fi;
+	;;
+	"5")
+	if [ -e /system/etc/init.d/86cleaner ]; then
+			rm -f /system/etc/init.d/86cleaner
+			echo
+			echo "[DISABLED] Cleaning junks on boot"
+	else
+			cp /system/etc/speedboost/86cleaner /system/etc/init.d/86cleaner
+			chmod 755 /system/etc/init.d/86cleaner
+			echo
+			echo "[ENABLED] Cleaning junks on boot"
+			clear
+			boostbuster
+	fi;
+	;;
+	"6")
+	if [ -e /system/etc/init.d/87swapon ]; then
+			rm -f /system/etc/init.d/87swapon
+			echo "[DISABLED] Activating swap on boot"
+	else
+			cp /system/etc/speedboost/87swapon /system/etc/init.d/87swapon
+			chmod 755 /system/etc/init.d/87swapon
+			echo
+			echo "[ENABLED] Activating swap on boot"
+			boostbuster
+	fi;
+  ;;
+  "7")
+	if [ -e /system/etc/init.d/88bustertweaks ]; then
+			rm -f /system/etc/init.d/88bustertweaks
+			echo "[DISABLED] BusterTweaks"
+	else
+			cp /system/etc/speedboost/88bustertweaks /system/etc/init.d/88bustertweaks
+			chmod 755 /system/etc/init.d/88bustertweaks
+			echo
+			echo "[ENABLED] BusterTweaks"
+			boostbuster
+	fi;
+	;;
+	"r" | "R")
+	clear
+  echo
+  echo "***********************************"
+  echo "*         BoostBuster v1.1        *"
+  echo "*  Copyright (c) Leonard Luangga  *"
+  echo "***********************************"
+  echo
+	echo "         .:: REBOOTING ::.         "
+	sleep 2
+	reboot
+	;;
+	"e" | "E")
+	clear
+	sleep 1
+	clear
+	exit
+	;;
+	"u" | "U")
+	echo "Do you really want to uninstall? (Y/N)"
+	read rm
+	;;
+	"a" | "A")
+	echo "Are you sure, want enable all tweaks? (Y/N)"
+	read en
+	;;
+	"d" | "D")
+	echo "Do you really want to disable all tweaks? (Y/N)"
+	read dis
+	;;
+esac
+
+case "$rm" in
+	"y" | "Y")
+	rm -rf /system/etc/boostbuster
+	rm -f /system/etc/init.d/82iospeed
+	rm -f /system/etc/init.d/83sqlite
+	rm -f /system/etc/init.d/84zipalign
+	rm -f /system/etc/init.d/85firewall
+	rm -f /system/etc/init.d/86cleaner
+	rm -f /system/etc/init.d/87swapon
+  rm -f /system/etc/init.d/88bustertweaks
+	rm -f /system/bin/boostbuster
+	echo
+	echo "Tweaks Uninstalled."
+	echo "Phone will now reboot..."
+	sleep 2
+	reboot 
+	;;
+	"n" | "N")
+	clear
+	boostbuster
+	;;
+esac
+
+case "$dis" in
+	"y" | "Y")
+  rm -f /system/etc/init.d/82iospeed
+	rm -f /system/etc/init.d/83sqlite
+	rm -f /system/etc/init.d/84zipalign
+	rm -f /system/etc/init.d/85firewall
+	rm -f /system/etc/init.d/86cleaner
+	rm -f /system/etc/init.d/87swapon
+  rm -f /system/etc/init.d/88bustertweaks
+	echo
+	echo "All tweaks disabled."
+	echo "Phone will now reboot..."
+	sleep 2
+	reboot 
+	;;
+	"n" | "N")
+	clear
+	boostbuster
+	;;
+esac
+
+case "$en" in
+	"y" | "Y")
+	cp /system/etc/boostbuster/82iospeed /system/etc/init.d/82iospeed
+	chmod 755 /system/etc/init.d/82iospeed
+
+	cp /system/etc/boostbuster/83sqlite /system/etc/init.d/83sqlite
+	chmod 755 /system/etc/init.d/83sqlite
+
+	cp /system/etc/boostbuster/84zipalign /system/etc/init.d/84zipalign
+	chmod 755 /system/etc/init.d/84zipalign
+
+	cp /system/etc/boostbuster/85firewall /system/etc/init.d/85firewall
+	chmod 755 /system/etc/init.d/85firewall
+
+	cp /system/etc/boostbuster/86cleaner /system/etc/init.d/86cleaner
+	chmod 755 /system/etc/init.d/86cleaner
+
+	cp /system/etc/boostbuster/87swapon /system/etc/init.d/87swapon
+	chmod 755 /system/etc/init.d/87swapon
+
+  cp /system/etc/boostbuster/88bustertweaks /system/etc/init.d/88bustertweaks
+  chmod 755 /system/etc/init.d/88bustertweaks
+
+	echo
+	echo "All tweaks enabled."
+	echo "Phone will now reboot..."
+	sleep 2
+	reboot 
+	;;
+	"n" | "N")
+	clear
+	boostbuster
+	;;
+esac
+
+mount -o remount,ro /system

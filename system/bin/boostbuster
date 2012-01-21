@@ -1,14 +1,17 @@
 #!/system/bin/sh
 #
-# BoostBuster v1.1
+# BoostBuster Tweaks
 # =============================
 # Copyright (c) Leonard Luangga
+
+
+$VER = $(cat /system/etc/boostbuster/VERSION)
 
 
 if [ "$(id -u)" != "0" ]; then
   echo
   echo "***********************************"
-  echo "*         BoostBuster v1.1        *"
+  echo "*         BoostBuster $VER        *"
   echo "*  Copyright (c) Leonard Luangga  *"
   echo "***********************************"
   echo
@@ -23,7 +26,7 @@ clear
 
 echo
 echo "***********************************"
-echo "*         BoostBuster v1.1        *"
+echo "*         BoostBuster $VER        *"
 echo "*  Copyright (c) Leonard Luangga  *"
 echo "***********************************"
 echo
@@ -71,9 +74,9 @@ fi
 
 if [ -e /system/etc/init.d/88bustertweaks ];
 then
-  	echo " 7 - Disable BusterTweaks"
+  	echo " 7 - Disable BusterTweaks (Main Tweaks)"
 else
-	echo " 7 - Enable BusterTweaks"
+	echo " 7 - Enable BusterTweaks (Main Tweaks)"
 fi
 
 
@@ -189,7 +192,7 @@ case "$tweaks" in
 	clear
 	echo
 	echo "***********************************"
-	echo "*         BoostBuster v1.1        *"
+	echo "*         BoostBuster $VER        *"
 	echo "*  Copyright (c) Leonard Luangga  *"
 	echo "***********************************"
 	echo

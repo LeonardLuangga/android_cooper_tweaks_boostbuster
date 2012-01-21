@@ -107,7 +107,7 @@ fi
 
 if [ -e /sys/module/lowmemorykiller/parameters/minfree ]
 then
-	echo "2560,4096,6144,12288,14336,18432" > /sys/module/lowmemorykiller/parameters/minfree
+	echo "2304,4608,6912,11520,13824,16128" > /sys/module/lowmemorykiller/parameters/minfree
 fi
 
 

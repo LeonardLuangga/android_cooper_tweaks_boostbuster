@@ -24,7 +24,7 @@ echo 4096 87380 404480 > /proc/sys/net/ipv4/tcp_rmem
 #optimize build.prop
 #setprop ro.ril.hsxpa 2 #HSDPA/UMTS? I think this one gonna drain more and more battery
 #setprop ro.ril.hsxpa 1 #HSDPA only? hmm I think this one drain more battery than UMTS only
-#setprop ro.ril.hsxpa 0 #UMTS only? slower but I think this one drain less battery
+#setprop ro.ril.hsxpa 0 #UMTS only? slower than HSDPA but I think this one drain less battery
 setprop ro.ril.hsxpa 0
 setprop ro.ril.gprsclass 10
 setprop ro.ril.hsupa.category 6

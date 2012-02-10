@@ -96,8 +96,7 @@ then
 fi
 
 
-# from V8 TurboBoost by GadgetCheck
-# configure touchscreen sensitivity
+# configure touchscreen sensitivity - Copyright (c) GadgetCheck
 echo 7035 > /sys/class/touch/switch/set_touchscreen;
 echo 8002 > /sys/class/touch/switch/set_touchscreen;
 echo 11000 > /sys/class/touch/switch/set_touchscreen;

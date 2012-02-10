@@ -1,0 +1,32 @@
+#!/system/bih/sh
+#
+# Copyright (c) Leonard Luangga
+
+
+#optimize build.prop
+setprop keyguard.no_require_sim true
+setprop wifi.supplicant_scan_interval 300
+setprop windowsmgr.max_events_per_sec 150
+setprop windowsmgr.support_rotation_270 true
+setprop ro.mot.eri.losalert.delay 1000
+setprop ro.lge.proximity.delay 25
+setprop mot.proximity.delay 25
+setprop persist.sys.use_dithering 0
+setprop persist.sys.purgeable_assets 1
+setprop ro.media.dec.jpeg.memcap 20000000
+setprop ro.media.enc.jpeg.quality 100
+setprop ro.HOME_APP_ADJ 1
+setprop ro.HOME_APP_MEM 2048
+setprop dalvik.vm.heapsize 72m
+setprop video.accelerate.hw 1
+setprop media.stagefright.enable-player true
+setprop ro.ril.disable.power.collapse 0
+setprop persist.adb.notify 0
+setprop pm.sleep_mode 1
+setprop debug.sf.hw 1
+setprop debug.performance.tuning 1
+setprop dalvik.vm.execution-mode int:jit
+
+#untested
+#setprop ro.kernel.android.checkjni 0; #does it really fix some apps issue? http://forum.xda-developers.com/archive/index.php/t-1253326.html
+#setprop ro.mot.buttonlight.timeout 0; #force button lights on when screen is on

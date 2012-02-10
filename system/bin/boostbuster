@@ -9,14 +9,14 @@ $VER = $(cat /system/etc/boostbuster/VERSION)
 
 
 if [ "$(id -u)" != "0" ]; then
-  echo
-  echo "*************************************"
-  echo "*          BoostBuster $VER         *"
-  echo "* https://github.com/LeonardLuangga *"
-  echo "*************************************"
-  echo
-  echo 'This script must be run as root!'
-  exit 1
+	echo
+	echo "*************************************"
+	echo "*          BoostBuster $VER         *"
+	echo "* https://github.com/LeonardLuangga *"
+	echo "*************************************"
+	echo
+	echo 'This script must be run as root!'
+	exit 1
 fi
 
 
@@ -25,10 +25,10 @@ clear
 
 
 echo
-echo "***********************************"
-echo "*         BoostBuster $VER        *"
-echo "*  Copyright (c) Leonard Luangga  *"
-echo "***********************************"
+echo "*************************************"
+echo "*          BoostBuster $VER         *"
+echo "* https://github.com/LeonardLuangga *"
+echo "*************************************"
 echo
 
 

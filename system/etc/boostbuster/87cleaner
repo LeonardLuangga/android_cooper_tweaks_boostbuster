@@ -3,6 +3,14 @@
 # Copyright (c) Leonard Luangga
 
 
+#drop caches to free some memory
+sync
+echo 3 > /proc/sys/vm/drop_caches
+sleep 1
+echo 1 > /proc/sys/vm/drop_caches
+#free pagecache. dentries and inodes will be managed by /proc/sys/vm/vfs_cache_pressure
+
+
 #remove cache, tmp, and unused files
 rm -f /cache/*.apk
 rm -f /cache/*.tmp

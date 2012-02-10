@@ -94,3 +94,12 @@ if [ -e /sys/module/lowmemorykiller/parameters/minfree ]
 then
 	echo "2304,4608,6912,11520,13824,16128" > /sys/module/lowmemorykiller/parameters/minfree
 fi
+
+
+# from V8 TurboBoost by GadgetCheck
+# configure touchscreen sensitivity
+echo 7035 > /sys/class/touch/switch/set_touchscreen;
+echo 8002 > /sys/class/touch/switch/set_touchscreen;
+echo 11000 > /sys/class/touch/switch/set_touchscreen;
+echo 13060 > /sys/class/touch/switch/set_touchscreen;
+echo 14005 > /sys/class/touch/switch/set_touchscreen;

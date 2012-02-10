@@ -5,7 +5,7 @@
 # Copyright (c) Leonard Luangga
 
 
-$VER = $(cat /system/etc/boostbuster/VERSION)
+VER=$(cat /system/etc/boostbuster/VERSION)
 
 
 if [ "$(id -u)" != "0" ]; then
@@ -20,6 +20,31 @@ if [ "$(id -u)" != "0" ]; then
 fi
 
 
+BOOSTIO="/system/etc/boostbuster/s82iospeed";
+BOOSTNET="/system/etc/boostbuster/s83netspeed";
+BOOSTFIRE="/system/etc/boostbuster/s84firewall";
+BOOSTSQL="/system/etc/boostbuster/s85sqlite";
+BOOSTZIP="/system/etc/boostbuster/s86zipalign";
+BOOSTSCR="/system/etc/boostbuster/s87touchscreen";
+BOOSTCORE="/system/etc/boostbuster/s88coretweaks";
+BOSSTCLEAN="/system/etc/boostbuster/s89cleaner";
+BOOSTSWAP="/system/etc/boostbuster/s90swapon";
+BOOSTPROP="/system/etc/boostbuster/s91proptweaks";
+BOOSTDNS1="/system/etc/resolv.id.conf";
+BOOSTDNS2="/system/etc/resolv.google.conf";
+
+INITIO="/system/etc/init.d/s82iospeed";
+INITNET="/system/etc/init.d/s83netspeed";
+INITFIRE="/system/etc/init.d/s84firewall";
+INITSQL="/system/etc/init.d/s85sqlite";
+INITZIP="/system/etc/init.d/s86zipalign";
+INITSCR="/system/etc/init.d/s87touchscreen";
+INITCORE="/system/etc/init.d/s88coretweaks";
+INITCLEAN="/system/etc/init.d/s89cleaner";
+INITSWAP="/system/etc/init.d/s90swapon";
+INITPROP="/system/etc/init.d/s91proptweaks";
+INITDNS="/system/etc/resolv.conf";
+
 mount -o remount,rw /system
 clear
 
@@ -32,47 +57,47 @@ echo "*************************************"
 echo
 
 
-if [ -e /system/etc/init.d/82iospeed ]
+if [ -e /system/etc/init.d/s82iospeed ]
 then
   	echo " 1 - Disable I/O Speed Optimizer"
 else
 	echo " 1 - Enable I/O Speed Optimizer"
 fi
 
-if [ -e /system/etc/init.d/83sqlite ]
+if [ -e /system/etc/init.d/s83sqlite ]
 then
 	echo " 2 - Disable SQLite database optimizer"
 else
 	echo " 2 - Enable SQLite database optimizer"
 fi
 
-if [ -e /system/etc/init.d/84zipalign ]
+if [ -e /system/etc/init.d/s84zipalign ]
 then
 	echo " 3 - Disable ZipAlign /data on boot" 
 else
 	echo " 3 - Enable ZipAlign /data on boot" 
 fi
 
-if [ -e /system/etc/init.d/85firewall ]; then
+if [ -e /system/etc/init.d/s85firewall ]; then
 	echo " 4 - Disable Firewall"
 else
 	echo " 4 - Enable Firewall"
 fi
 
-if [ -e /system/etc/init.d/86cleaner ]; then
+if [ -e /system/etc/init.d/s86cleaner ]; then
 	echo " 5 - Disable Cleaning junks on boot"
 else
 	echo " 5 - Enable Cleaning junks on boot"
 fi
 
-if [ -e /system/etc/init.d/87swapon ];
+if [ -e /system/etc/init.d/s87swapon ];
 then
 	echo " 6 - Disable Activating swap on boot"
 else
 	echo " 6 - Enable Activating swap on boot"
 fi
 
-if [ -e /system/etc/init.d/88bustertweaks ];
+if [ -e /system/etc/init.d/s88bustertweaks ];
 then
   	echo " 7 - Disable BusterTweaks (Main Tweaks)"
 else
@@ -95,13 +120,13 @@ read tweaks
 
 case "$tweaks" in
 	"1")
-	if [ -e /system/etc/init.d/82iospeed ]; then
-		rm -f /system/etc/init.d/82iospeed
+	if [ -e /system/etc/init.d/s82iospeed ]; then
+		rm -f /system/etc/init.d/s82iospeed
 		echo
 		echo "[DISABLED] I/O Speed Tweaks"
 	else
-		cp /system/etc/boostbuster/82iospeed /system/etc/init.d/82iospeed
-		chmod 755 /system/etc/init.d/82iospeed
+		cp /system/etc/boostbuster/s82iospeed /system/etc/init.d/s82iospeed
+		chmod 755 /system/etc/init.d/s82iospeed
 		echo
 		echo "[ENABLED] I/O Speed Tweaks"
 		clear
@@ -109,13 +134,13 @@ case "$tweaks" in
 	fi;
 	;;
 	"2")
-	if [ -e /system/etc/init.d/83sqlite ]; then
-		rm -f /system/etc/init.d/83sqlite
+	if [ -e /system/etc/init.d/s83sqlite ]; then
+		rm -f /system/etc/init.d/s83sqlite
 		echo
 		echo "[DISABLED] SQLite Database Optimizer"
 	else
-		cp /system/etc/boostbuster/83sqlite /system/etc/init.d/83sqlite
-		chmod 755 /system/etc/init.d/83sqlite
+		cp /system/etc/boostbuster/s83sqlite /system/etc/init.d/s83sqlite
+		chmod 755 /system/etc/init.d/s83sqlite
 		echo
 		echo "[ENABLED] SQLite Database Optimizer"
 		clear
@@ -123,13 +148,13 @@ case "$tweaks" in
 	fi;
  	;;
 	"3")
-	if [ -e /system/etc/init.d/84zipalign ]; then
-		rm -f /system/etc/init.d/84zipalign
+	if [ -e /system/etc/init.d/s84zipalign ]; then
+		rm -f /system/etc/init.d/s84zipalign
 		echo
 		echo "[DISABLED] ZipAlign on boot"
 	else
-		cp /system/etc/boostbuster/84zipalign /system/etc/init.d/84zipalign
-		chmod 755 /system/etc/init.d/84zipalign
+		cp /system/etc/boostbuster/s84zipalign /system/etc/init.d/s84zipalign
+		chmod 755 /system/etc/init.d/s84zipalign
 		echo
 		echo "[ENABLED] ZipAlign on boot"
 		clear

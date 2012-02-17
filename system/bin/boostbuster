@@ -5,9 +5,6 @@
 # Copyright (c) Leonard Luangga
 
 
-VER=$(cat /system/etc/boostbuster/VERSION)
-
-
 if [ "$(id -u)" != "0" ]; then
 	echo
 	echo "*************************************"
@@ -20,6 +17,8 @@ if [ "$(id -u)" != "0" ]; then
 fi
 
 
+VER=$(cat /system/etc/boostbuster/VERSION)
+
 BOOSTIO="/system/etc/boostbuster/s81iospeed";
 BOOSTNET="/system/etc/boostbuster/s82netspeed";
 BOOSTFIRE="/system/etc/boostbuster/s83firewall";
@@ -29,9 +28,6 @@ BOSSTCLEAN="/system/etc/boostbuster/s86cleaner";
 BOOSTSWAP="/system/etc/boostbuster/s87swapon";
 BOOSTCORE="/system/etc/boostbuster/s88coretweaks";
 BOOSTPROP="/system/etc/boostbuster/s89proptweaks";
-BOOSTDNS1="/system/etc/resolv.id.conf";
-BOOSTDNS2="/system/etc/resolv.google.conf";
-#use head -n 1 filename
 
 INITIO="/system/etc/init.d/s81iospeed";
 INITNET="/system/etc/init.d/s82netspeed";
@@ -42,7 +38,35 @@ INITCLEAN="/system/etc/init.d/s86cleaner";
 INITSWAP="/system/etc/init.d/s87swapon";
 INITCORE="/system/etc/init.d/s88coretweaks";
 INITPROP="/system/etc/init.d/s89proptweaks";
-INITDNS="/system/etc/resolv.conf";
+
+
+toogletweak () {
+	if [ -e $1 ]; then
+		rm -f $1
+		echo
+		echo "[DISABLED] $3"
+	else
+		cp $1 $2
+		chmod 755 $2
+		echo
+		echo "[ENABLED] $3"
+		boostbuster
+	fi;
+}
+
+toogledns () {
+	if [ "$(head -n 1 filename)" != "8.8.8.8" ]; then
+		echo "nameserver 8.8.8.8" > /system/etc/resolv.conf
+		echo "nameserver 8.8.4.4" >> /system/etc/resolv.conf
+		echo "[SWITCHED] DNS to Google DNS Server"
+		boostbuster
+	else
+		echo "nameserver 202.134.1.10" > /system/etc/resolv.conf
+		echo "nameserver 125.160.2.34" >> /system/etc/resolv.conf
+		echo "[SWITCHED] DNS to Speedy (Indonesia) DNS Server"
+		boosbuster
+	fi;
+}
 
 mount -o remount,rw /system
 clear

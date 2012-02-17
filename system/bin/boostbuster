@@ -16,7 +16,7 @@ if [ "$(id -u)" != "0" ]; then
 	echo "*************************************"
 	echo
 	echo 'This script must be run as root!'
-	exit 1
+	exit
 fi
 
 
@@ -112,7 +112,7 @@ else
 	echo " 8 - Enable activating swap on boot"
 fi
 
-if [ -e $INITPROP ];
+if [ -e $INITPROP ]
 then
   	echo " 9 - Disable build.prop tweaks"
 else

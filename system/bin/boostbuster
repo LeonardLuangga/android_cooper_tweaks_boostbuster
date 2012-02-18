@@ -5,6 +5,9 @@
 # Copyright (c) Leonard Luangga
 
 
+VER=$(cat /system/etc/boostbuster/VERSION)
+
+
 if [ "$(id -u)" != "0" ]; then
 	echo
 	echo "*************************************"
@@ -17,7 +20,8 @@ if [ "$(id -u)" != "0" ]; then
 fi
 
 
-VER=$(cat /system/etc/boostbuster/VERSION)
+BOOSTAPPLY="no";
+
 
 BOOSTIO="/system/etc/boostbuster/s81iospeed";
 BOOSTNET="/system/etc/boostbuster/s82netspeed";
@@ -39,32 +43,44 @@ INITSWAP="/system/etc/init.d/s87swapon";
 INITCORE="/system/etc/init.d/s88coretweaks";
 INITPROP="/system/etc/init.d/s89proptweaks";
 
+MSGIO="I/O speed optimizer";
+MSGNET="network speed optimizer";
+MSGFIRE="firewall";
+MSGSQL="SQLite database optimizer";
+MSGZIP="ZipAlign /data on boot";
+MSGCLEAN="cleaning caches and memory on boot";
+MSGSWAP="core tweaks (kernel, vm, etc)";
+MSGCORE="activating swap on boot";
+MSGPROP="build.prop tweaks";
+
 
 toogletweak () {
 	if [ -e $1 ]; then
 		rm -f $1
 		echo
 		echo "[DISABLED] $3"
+		BOOSTAPPLY="yes";
 	else
 		cp $1 $2
 		chmod 755 $2
 		echo
 		echo "[ENABLED] $3"
-		boostbuster
+		BOOSTAPPLY="yes";
+		boostmain
 	fi;
 }
 
 toogledns () {
-	if [ "$(head -n 1 filename)" != "8.8.8.8" ]; then
+	if [ "$(head -n 1 /system/etc/resolv.conf)" != "8.8.8.8" ]; then
 		echo "nameserver 8.8.8.8" > /system/etc/resolv.conf
 		echo "nameserver 8.8.4.4" >> /system/etc/resolv.conf
 		echo "[SWITCHED] DNS to Google DNS Server"
-		boostbuster
+		boostmain
 	else
 		echo "nameserver 202.134.1.10" > /system/etc/resolv.conf
 		echo "nameserver 125.160.2.34" >> /system/etc/resolv.conf
 		echo "[SWITCHED] DNS to Speedy (Indonesia) DNS Server"
-		boosbuster
+		boostmain
 	fi;
 }
 
@@ -129,27 +145,35 @@ boostmain () {
 	fi
 
 
-	if [ -e $INITCORE ]
+	if [ -e $INITSWAP ]
 	then
-		echo " 7 - Disable core tweaks (kernel, vm, etc)"
+		echo " 7 - Disable activating swap on boot"
 	else
-		echo " 7 - Enable core tweaks (kernel, vm, etc)"
+		echo " 7 - Enable activating swap on boot"
 	fi
 
 
-	if [ -e $INITSWAP ]
+	if [ -e $INITCORE ]
 	then
-		echo " 8 - Disable activating swap on boot"
+		echo " 8 - Disable core tweaks (kernel, vm, etc)"
 	else
-		echo " 8 - Enable activating swap on boot"
+		echo " 8 - Enable core tweaks (kernel, vm, etc)"
 	fi
 
 
 	if [ -e $INITPROP ]
 	then
-  		echo " 9 - Disable build.prop tweaks"
+		echo " 9 - Disable build.prop tweaks"
 	else
 		echo " 9 - Enable build.prop tweaks"
+	fi
+
+
+	if [ "$(head -n 1 /system/etc/resolv.conf)" != "8.8.8.8" ]
+	then
+		echo " 0 - Switch to Google DNS"
+	else
+		echo " 0 - Switch to Indonesian Speedy DNS"
 	fi
 
 
@@ -167,100 +191,47 @@ boostmain () {
 
 
 	case "$tweaks" in
+
 		"1")
-		if [ -e /system/etc/init.d/s82iospeed ]; then
-			rm -f /system/etc/init.d/s82iospeed
-			echo
-			echo "[DISABLED] I/O Speed Tweaks"
-		else
-			cp /system/etc/boostbuster/s82iospeed /system/etc/init.d/s82iospeed
-			chmod 755 /system/etc/init.d/s82iospeed
-			echo
-			echo "[ENABLED] I/O Speed Tweaks"
-			clear
-			boostbuster
-		fi;
+		toogletweak $BOOSTIO $INITIO $MSGIO
 		;;
+
 		"2")
-		if [ -e /system/etc/init.d/s83sqlite ]; then
-			rm -f /system/etc/init.d/s83sqlite
-			echo
-			echo "[DISABLED] SQLite Database Optimizer"
-		else
-			cp /system/etc/boostbuster/s83sqlite /system/etc/init.d/s83sqlite
-			chmod 755 /system/etc/init.d/s83sqlite
-			echo
-			echo "[ENABLED] SQLite Database Optimizer"
-			clear
-			boostbuster
-		fi;
- 		;;
+		toogletweak $BOOSTNET $INITNET $MSGNET
+		;;
+
 		"3")
-		if [ -e /system/etc/init.d/s84zipalign ]; then
-			rm -f /system/etc/init.d/s84zipalign
-			echo
-			echo "[DISABLED] ZipAlign on boot"
-		else
-			cp /system/etc/boostbuster/s84zipalign /system/etc/init.d/s84zipalign
-			chmod 755 /system/etc/init.d/s84zipalign
-			echo
-			echo "[ENABLED] ZipAlign on boot"
-			clear
-			boostbuster
-		fi; 
+		toogletweak $BOOSTFIRE $INITFIRE $MSGFIRE
 		;;
+
 		"4")
-		if [ -e /system/etc/init.d/85firewall ]; then
-			rm -f /system/etc/init.d/85firewall
-			echo
-			echo "[DISABLED] Firewall"
-		else
-			cp /system/etc/boostbuster/85firewall /system/etc/init.d/85firewall
-			chmod 755 /system/etc/init.d/85firewall
-			echo
-			echo "[ENABLED] Firewall"
-			clear
-			boostbuster
-		fi;
+		toogletweak $BOOSTSQL $INITSQL $MSGSQL
 		;;
+
 		"5")
-		if [ -e /system/etc/init.d/86cleaner ]; then
-			rm -f /system/etc/init.d/86cleaner
-			echo
-			echo "[DISABLED] Cleaning junks on boot"
-		else
-			cp /system/etc/boostbuster/86cleaner /system/etc/init.d/86cleaner
-			chmod 755 /system/etc/init.d/86cleaner
-			echo
-			echo "[ENABLED] Cleaning junks on boot"
-			clear
-			boostbuster
-		fi;
+		toogletweak $BOOSTZIP $INITZIP $MSGZIP
 		;;
+
 		"6")
-		if [ -e /system/etc/init.d/87swapon ]; then
-			rm -f /system/etc/init.d/87swapon
-			echo "[DISABLED] Activating swap on boot"
-		else
-			cp /system/etc/boostbuster/87swapon /system/etc/init.d/87swapon
-			chmod 755 /system/etc/init.d/87swapon
-			echo
-			echo "[ENABLED] Activating swap on boot"
-			boostbuster
-		fi;
+		toogletweak $BOOSTCLEAN $INITCLEAN $MSGCLEAN
 		;;
+
 		"7")
-		if [ -e /system/etc/init.d/88bustertweaks ]; then
-			rm -f /system/etc/init.d/88bustertweaks
-			echo "[DISABLED] BusterTweaks"
-		else
-			cp /system/etc/boostbuster/88bustertweaks /system/etc/init.d/88bustertweaks
-			chmod 755 /system/etc/init.d/88bustertweaks
-			echo
-			echo "[ENABLED] BusterTweaks"
-			boostbuster
-		fi;
+		toogletweak $BOOSTSWAP $INITSWAP $MSGSWAP
 		;;
+
+		"8")
+		toogletweak $BOOSTCORE $INITCORE $MSGCORE
+		;;
+
+		"9")
+		toogletweak $BOOSTPROP $INITPROP $MSGPROP
+		;;
+
+		"0")
+		toogledns
+		;;
+
 		"r" | "R")
 		clear
 		echo
@@ -273,23 +244,46 @@ boostmain () {
 		sleep 2
 		reboot
 		;;
-		"e" | "E")
-		clear
-		sleep 1
-		exit
-		;;
-		"u" | "U")
-		echo "Do you really want to uninstall? (Y/N)"
-		read rm
-		;;
+
 		"a" | "A")
+		echo
 		echo "Are you sure, want enable all tweaks? (Y/N)"
 		read en
 		;;
+
 		"d" | "D")
+		echo
 		echo "Do you really want to disable all tweaks? (Y/N)"
 		read dis
 		;;
+
+		"u" | "U")
+		echo
+		echo "Do you really want to uninstall? (Y/N)"
+		read rm
+		;;
+
+		"e" | "E")
+		clear
+		if [ $BOOSTAPPLY != "no" ]
+		then
+			echo
+			echo "You have made some init.d changes, in order to apply it you need to reboot system."
+			boostmain
+		else
+			echo
+			echo "***********************************"
+			echo "*         BoostBuster $VER        *"
+			echo "*  Copyright (c) Leonard Luangga  *"
+			echo "***********************************"
+			echo
+			echo "   Exiting.. Thank you for using.  "
+			sleep 1
+			mount -o remount,ro /system
+			exit
+		fi
+		;;
+
 	esac
 
 	case "$rm" in
@@ -371,6 +365,3 @@ boostmain () {
 		;;
 	esac
 }
-
-#case exit
-mount -o remount,ro /system
